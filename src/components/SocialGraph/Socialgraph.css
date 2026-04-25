@@ -1,0 +1,102 @@
+.graph-wrapper {
+  background: var(--paper);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 20px 14px;
+  box-shadow: 3px 3px 0 var(--shadow);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.graph-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  align-self: flex-start;
+}
+
+.graph-svg {
+  width: 100%;
+  max-width: 420px;
+}
+
+/* ── Edges ── */
+.graph-edge {
+  stroke: var(--border);
+  stroke-width: 1.5;
+  stroke-dasharray: 4 3;
+  transition: stroke 0.4s, stroke-dasharray 0.4s;
+}
+
+.graph-edge--tech {
+  stroke: var(--accent);
+  stroke-dasharray: none;
+  stroke-width: 2;
+}
+
+/* ── Nodes ── */
+.graph-node {
+  fill: var(--node);
+  transition: fill 0.3s, r 0.3s;
+}
+
+.graph-node--self {
+  fill: var(--ink);
+}
+
+.graph-node-glow {
+  fill: var(--accent);
+  opacity: 0.18;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.18; r: 18; }
+  50%       { opacity: 0.32; r: 22; }
+}
+
+.graph-node-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  fill: var(--ink-muted);
+  pointer-events: none;
+}
+
+/* ── Legend ── */
+.graph-legend {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.68rem;
+  color: var(--ink-muted);
+}
+
+.graph-legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--node);
+  display: inline-block;
+}
+
+.graph-legend-dot--peer {
+  background: var(--border);
+  border: 1px solid var(--node);
+}
+
+.graph-legend-dot--tech {
+  background: var(--accent);
+}
+
+/* remove or replace .graph-node rules with: */
+.graph-node-img {
+  image-rendering: pixelated; /* remove this line if your PNGs are smooth/illustrated */
+  transition: opacity 0.3s;
+}
+
+.graph-node-img--self {
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+}

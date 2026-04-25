@@ -1,0 +1,97 @@
+.timeline-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 0 4px;
+}
+
+/* ── Buttons ── */
+.timeline-btn {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: lowercase;
+  padding: 8px 14px;
+  background: var(--paper);
+  color: var(--ink);
+  border: 1.5px solid var(--ink);
+  border-radius: var(--radius);
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background 0.15s, color 0.15s;
+  box-shadow: 2px 2px 0 var(--shadow);
+}
+
+.timeline-btn:not(:disabled):hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.timeline-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* ── Track ── */
+.timeline-track-container {
+  flex: 1;
+  padding: 24px 0 24px;
+}
+
+.timeline-track {
+  position: relative;
+  height: 3px;
+  background: var(--border);
+  border-radius: 2px;
+}
+
+.timeline-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background: var(--ink);
+  border-radius: 2px;
+  transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── Nodes ── */
+.timeline-node {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--border);
+  border: 2px solid var(--ink);
+  transition: background 0.3s, transform 0.3s;
+}
+
+.timeline-node--past {
+  background: var(--ink);
+}
+
+.timeline-node--active {
+  background: var(--accent);
+  border-color: var(--accent);
+  transform: translate(-50%, -50%) scale(1.5);
+  box-shadow: 0 0 0 4px var(--accent-soft);
+}
+
+.timeline-node-label {
+  position: absolute;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--ink-muted);
+  white-space: nowrap;
+}
+
+.timeline-node--active .timeline-node-label {
+  color: var(--accent);
+  font-weight: 500;
+}

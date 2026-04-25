@@ -43,8 +43,9 @@ def screen_time_minutes(age: int):
     
 # ------------------------------- IPAD KID --------------------------------
 # role of "ipad kid"
+'''
 @app.post("/ipad_kid_init")
-def simulate(req): # req = a json that contains the age and the debate question
+def simulate(req): # req = a json that contains the age
     response = client.chat.completions.create(
 		model="LLM360/K2-Think-V2",
 		messages = [
@@ -56,10 +57,12 @@ def simulate(req): # req = a json that contains the age and the debate question
 			"chat_template_kwargs": {"reasoning_effort": "high"},
 		},
 	)
-    return response.choices[0].message.content
+	reply = response.choices[0].message.content
+	add_person("Sophie")
+    return reply
+'''
 
-
-@app.post("/ipad_kid_response")
+@app.post("/age_ipad_kid")
 def simulate(req): # req = a json that contains the age and the debate question
     response = client.chat.completions.create(
 		model="LLM360/K2-Think-V2",
@@ -92,10 +95,9 @@ def simulate(req):
 			"chat_template_kwargs": {"reasoning_effort": "high"},
 		},
 	)
- 
 	return response.choices[0].message.content
 
-
+'''
 @app.post("/normal_kid_response")
 def simulate(req):
 	response = client.chat.completions.create(
@@ -111,3 +113,4 @@ def simulate(req):
 	)
  
 	return response.choices[0].message.content
+'''
