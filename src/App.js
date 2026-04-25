@@ -93,6 +93,8 @@ export default function App() {
           <SocialGraph
             age={currentAge}
             techIntroduced={techPetrs.has(selectedPetr)}
+            techPetrs={techPetrs}
+            selectedPetr={selectedPetr}
             setSelectedPetr={setSelectedPetr}
           />
         </section>

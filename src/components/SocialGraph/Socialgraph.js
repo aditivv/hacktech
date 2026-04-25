@@ -13,8 +13,7 @@ const GRAPH = {
   edges: [[0,1],[0,2],[0,3],[0,4],[1,2],[1,3],[1,4],[2,3],[2,4],[3,4]],
 };
 
-export default function SocialGraph({ age, techIntroduced, setSelectedPetr }) {
-
+export default function SocialGraph({ age, techIntroduced, setSelectedPetr, selectedPetr, techPetrs }) {
   return (
     <div className="graph-wrapper">
       <p className="graph-label">Social Network — Age {age}</p>
@@ -23,35 +22,38 @@ export default function SocialGraph({ age, techIntroduced, setSelectedPetr }) {
         viewBox="0 0 400 440"
         xmlns="http://www.w3.org/2000/svg"
       >
-        {/* Edges */}
         {GRAPH.edges.map(([a, b], i) => {
           const na = GRAPH.nodes[a];
           const nb = GRAPH.nodes[b];
           return (
             <line
               key={i}
-              className={`graph-edge`}
+              className="graph-edge"
               x1={na.x} y1={na.y}
               x2={nb.x} y2={nb.y}
             />
           );
         })}
 
-        {/* Nodes */}
         {GRAPH.nodes.map((n) => {
-          const size = n.id === 0 ? 28 : 22;  // half-width of the image
-          const src  = (n.id === 0 && techIntroduced) ? ipadKid : normalKid;
+          const size       = 22;
+          const isSelected = n.label === selectedPetr;
+          const hasTech    = techPetrs?.has(n.label);
+          const src        = hasTech ? ipadKid : normalKid;
 
           return (
-            <g key={n.id} className="graph-node-group">
+            <g
+              key={n.id}
+              className={`graph-node-group ${isSelected ? "graph-node-group--selected" : ""}`}
+              onClick={() => setSelectedPetr(n.label)}
+            >
               <image
                 href={src}
                 x={n.x - size}
                 y={n.y - size}
                 width={size * 2}
                 height={size * 2}
-                className={`graph-node-img ${n.id === 0 ? "graph-node-img--self" : ""}`}
-                onClick={() => setSelectedPetr(n.label)}
+                className="graph-node-img"
               />
               <text
                 x={n.x} y={n.y + size + 14}
