@@ -40,7 +40,8 @@ def simulate(req): # req = a json that contains the age and the debate question
     response = client.chat.completions.create(
 		model="LLM360/K2-Think-V2",
 		messages = [
-			{"role": "system", "content": f"You are a {req.age}-year-old person. {IPAD_KID_PERSONALITY}. You have a daily average screen time of about {screen_time_minutes(req.age)} minutes."},
+			{"role": "system", "content": f"You are a {req.age}-year-old person. {IPAD_KID_PERSONALITY}. \
+       		You have a daily average screen time of about {screen_time_minutes(req.age)} minutes."},
 			{"role": "user", "content": f"What is your opinion the following question: {req.debate_q}"} # we can input the prompt here later based on what the user inputs as the prompt
 		],
 		extra_body={
@@ -55,8 +56,11 @@ def simulate(req): # req = a json that contains the age and the debate question
     response = client.chat.completions.create(
 		model="LLM360/K2-Think-V2",
 		messages = [
-			{"role": "system", "content": f"You are a {req.age}-year-old person. {IPAD_KID_PERSONALITY}. You have a daily average screen time of about {screen_time_minutes(req.age)} minutes. You have been debating the following question against another person of the same age: {req.debate_q}. You have had the following arguments so far: {req.arguments}. This is what your stats were before their response: {req.traits}."},
-			{"role": "user", "content": f"What is your rebuttal to their response? What are your statistics now? Please return a json with all of this information. Only return the JSON file, no text surrounding your response, ONLY the JSON file."} # we can input the prompt here later based on what the user inputs as the prompt
+			{"role": "system", "content": f"You are a {req.age}-year-old person. {IPAD_KID_PERSONALITY}. You have a daily average screen time of about {screen_time_minutes(req.age)} minutes. \
+       		You have been debating the following question against another person of the same age: {req.debate_q}. \
+            You have had the following arguments so far: {req.arguments}. This is what your stats were before their response: {req.traits}."},
+			{"role": "user", "content": "What is your rebuttal to their response? What are your traits now after you recieved this response in return to what was said to you, based off of your personality type? Please return a json with all of this information. \
+										Store your rebuttal as a sting with a key called 'rebuttal', and store your updated traits as a list with key called 'traits' Only return the JSON file, no text surrounding your response, ONLY the JSON file."}
 		],
 		extra_body={
 			"chat_template_kwargs": {"reasoning_effort": "high"},
@@ -89,8 +93,9 @@ def simulate(req):
 	response = client.chat.completions.create(
 		model="LLM360/K2-Think-V2",
 		messages = [
-			{"role": "system", "content": f"You are a {req.age}-year-old person. {NORMAL_KID_PERSONALITY}. You have been debating the following question against another person of the same age: {req.debate_q}. You have had the following arguments so far: {req.arguments}. This is what your stats were before their response: {req.traits}."},
-   			{"role": "user", "content": f"What is your rebuttal to their response? What are your statistics now? Please return a json with all of this information. Only return the JSON file, no text surrounding your response, ONLY the JSON file."}
+			{"role": "system", "content": f"You are a {req.age}-year-old person. {NORMAL_KID_PERSONALITY}. You have been debating the following question against another person of the same age: {req.debate_q}. You have had the following arguments so far: {req.arguments}. This is what your traits were before their response: {req.traits}."},
+   			{"role": "user", "content": "What is your rebuttal to their response? What are your traits now after you recieved this response in return to what was said to you, based off of your personality type? Please return a json with all of this information. \
+										Store your rebuttal as a sting with a key called 'rebuttal', and store your updated traits as a list with key called 'traits' Only return the JSON file, no text surrounding your response, ONLY the JSON file."}
 		],
 		extra_body={
 			"chat_template_kwargs": {"reasoning_effort": "high"},
