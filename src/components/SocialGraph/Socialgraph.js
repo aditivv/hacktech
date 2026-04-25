@@ -1,6 +1,6 @@
 import "./Socialgraph.css";
-import ipadKid  from "../../assets/ipad_kid.png";
-import normalKid from "../../assets/normal_kid.png";
+import ipadKid  from "../../assets/ipad_cropped.png";
+import normalKid from "../../assets/normal_cropped.png";
 
 const GRAPH = {
   nodes: [

@@ -1,5 +1,6 @@
 import "./Profilecard.css";
 import RelationshipChart from "../RelationshipChart/RelationshipChart";
+import TraitsChart from "../TraitsChart/TraitsChart";
 
 export default function ProfileCard({ age, techIntroduced, onIntroduce, onRemove, selectedPetr }) {
   const FRIENDS = [{ name: "Petr 1", relationship: 100 },
@@ -7,34 +8,33 @@ export default function ProfileCard({ age, techIntroduced, onIntroduce, onRemove
                   { name: "Petr 3", relationship: 100 },
                   { name: "Petr 4", relationship: 100 },
                   { name: "Petr 5", relationship: 100 }];
-  const TRAITS = ["Confidence", "Attention Span", "Irritability", "Impulsivity", "Adaptability"]
+  const TRAITS = { "Confidence": 100, "Attention Span": 100, "Irritability": 100, "Impulsivity": 100, "Adaptability": 100}
 
   return (
     <div className="profile-card">
-      {/* Name / Friends / Traits table */}
-      <div className="profile-table">
+
+      {/* Row 1 — Name and Age */}
+      <div className="profile-section">
         <div className="profile-table-header">
           <span>Name</span>
-          <span>Friends</span>
+          <span>Age</span>
         </div>
-
-        {FRIENDS.map((f, i) => (
-          <div className="profile-table-row" key={f.name}>
-            <span className="profile-name">{i === 0 ? selectedPetr : ""}</span>
-            <span className="profile-friend">{selectedPetr === f.name ? "" : f.name}</span>
-          </div>
-        ))}
+        <div className="profile-table-row">
+          <span className="profile-name">{selectedPetr}</span>
+          <span className="profile-age-badge">{age}</span>
+        </div>
       </div>
 
-      {/* About me */}
-      <div className="profile-about">
-        <p className="profile-about-label">Relationship Chart</p>
+      {/* Row 2 — Relationship Chart */}
+      <div className="profile-section">
+        <p className="profile-section-label">Relationships</p>
         <RelationshipChart selectedPetr={selectedPetr} friends={FRIENDS} />
-        <p className="profile-about-label">About Me</p>
-        <p className="profile-about-text">placeholder</p>
-        {techIntroduced && (
-          <span className="profile-tech-badge">Tech introduced</span>
-        )}
+      </div>
+
+      {/* Row 3 — Traits Chart */}
+      <div className="profile-section">
+        <p className="profile-section-label">Traits</p>
+        <TraitsChart traits={TRAITS} />
       </div>
 
       {/* Action buttons */}
@@ -54,6 +54,7 @@ export default function ProfileCard({ age, techIntroduced, onIntroduce, onRemove
           Remove Tech
         </button>
       </div>
+
     </div>
   );
 }

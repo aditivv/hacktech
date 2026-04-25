@@ -131,3 +131,16 @@
   background: var(--accent-soft);
   color: var(--accent);
 }
+
+.profile-section {
+  padding: 12px 14px;
+  border-bottom: 1.5px solid var(--border);
+}
+
+.profile-section-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: 8px;
+}

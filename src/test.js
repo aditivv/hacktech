@@ -1,6 +1,7 @@
 // test.js
-import { addPerson } from './supabaseClient.js'
+import 'dotenv/config'
+import Supabase, { addPerson, addTech, removeTech } from './supabaseClient.js'
 
-addPerson('Sophie', 'person_A')
-    .then(data => console.log('Success:', data))
-    .catch(err => console.error('Error:', err))
+removeTech('person_A', 6)
+    .then(data => console.log('Removed tech:', data))
+    .catch(err => console.error('Error removing tech:', err))

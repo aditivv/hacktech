@@ -20,10 +20,10 @@ const EVENTS_BY_AGE = {
 
 export default function App() {
   const [currentAge, setCurrentAge] = useState(6);
-  const [techIntroduced, setTechIntroduced] = useState(false);
+  const [techPetrs, setTechPetrs] = useState(new Set());
   const [pendingAction, setPendingAction] = useState(null); // { type: 'introduce' | 'remove', age }
   const [modalOpen, setModalOpen] = useState(false);
-  const [selectedPetr, setSelectedPetr] = useState("");
+  const [selectedPetr, setSelectedPetr] = useState("Petr 1");
 
   const currentIndex = AGES.indexOf(currentAge);
 
@@ -52,8 +52,16 @@ export default function App() {
   };
 
   const handleConfirm = () => {
-    if (pendingAction?.type === "introduce") setTechIntroduced(true);
-    if (pendingAction?.type === "remove") setTechIntroduced(false);
+    if (pendingAction?.type === "introduce") {
+      setTechPetrs(prev => new Set([...prev, selectedPetr]));
+    }
+    if (pendingAction?.type === "remove") {
+      setTechPetrs(prev => {
+        const next = new Set(prev);
+        next.delete(selectedPetr);
+        return next;
+      });
+    }
     setModalOpen(false);
     setPendingAction(null);
   };
@@ -74,7 +82,7 @@ export default function App() {
         <aside className="left-panel">
           <ProfileCard
             age={currentAge}
-            techIntroduced={techIntroduced}
+            techIntroduced={techPetrs.has(selectedPetr)}
             onIntroduce={handleIntroduce}
             onRemove={handleRemove}
             selectedPetr={selectedPetr}
@@ -82,7 +90,11 @@ export default function App() {
         </aside>
 
         <section className="center-panel">
-          <SocialGraph age={currentAge} techIntroduced={techIntroduced} setSelectedPetr={setSelectedPetr} />
+          <SocialGraph
+            age={currentAge}
+            techIntroduced={techPetrs.has(selectedPetr)}
+            setSelectedPetr={setSelectedPetr}
+          />
         </section>
       </main>
 
