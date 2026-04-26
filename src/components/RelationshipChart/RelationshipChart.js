@@ -1,7 +1,5 @@
 // RelationshipChart.jsx
 import "./RelationshipChart.css";
-import iPad from "../../assets/ipad_cropped.png"
-import Normal from "../../assets/normal_cropped.png"
 
 const getStatus = (value) => {
   if (value >= 80) return "Close Friends";

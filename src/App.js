@@ -166,7 +166,7 @@ export default function App() {
     <div className="app">
       <header className="app-header">
         <span className="app-title">Screenbound</span>
-        <span className="app-subtitle">Social Development Simulator</span>
+        <span className="app-subtitle">Simulate screenagers.</span>
       </header>
 
       <main className="app-layout">
@@ -192,36 +192,6 @@ export default function App() {
             selectedPetr={selectedPetr}
             setSelectedPetr={handleSelectPetr}
           />
-          <div className="comparison-toggle-wrap">
-            <button
-              type="button"
-              className={`comparison-pill ${showComparison ? "open" : ""}`}
-              onClick={() => setShowComparison((s) => !s)}
-              aria-expanded={showComparison}
-              aria-controls="petr-comparison-panel"
-            >
-              <span className="pill-dot" aria-hidden="true" />
-              <span className="pill-label">
-                {showComparison ? "Hide cross-section" : "Compare all Petrs"}
-              </span>
-              <span className={`pill-chevron ${showComparison ? "up" : ""}`} aria-hidden="true">▾</span>
-            </button>
-
-            <div
-              id="petr-comparison-panel"
-              className={`comparison-collapse ${showComparison ? "open" : ""}`}
-              aria-hidden={!showComparison}
-            >
-              <div className="comparison-collapse-inner">
-                <PetrComparison
-                  techPetrs={techPetrs}
-                  selectedPetr={selectedPetr}
-                  setSelectedPetr={setSelectedPetr}
-                  currentAge={currentAge}
-                />
-              </div>
-            </div>
-          </div>
         </section>
       </main>
 
@@ -232,6 +202,36 @@ export default function App() {
           onAgeDown={handleAgeDown}
           onAgeUp={handleAgeUp}
         />
+        <div className="comparison-toggle-wrap">
+          <button
+            type="button"
+            className={`comparison-pill ${showComparison ? "open" : ""}`}
+            onClick={() => setShowComparison((s) => !s)}
+            aria-expanded={showComparison}
+            aria-controls="petr-comparison-panel"
+          >
+            <span className="pill-dot" aria-hidden="true" />
+            <span className="pill-label">
+              {showComparison ? "Hide cross-section" : "Compare all Petrs"}
+            </span>
+            <span className={`pill-chevron ${showComparison ? "up" : ""}`} aria-hidden="true">▾</span>
+          </button>
+
+          <div
+            id="petr-comparison-panel"
+            className={`comparison-collapse ${showComparison ? "open" : ""}`}
+            aria-hidden={!showComparison}
+          >
+            <div className="comparison-collapse-inner">
+              <PetrComparison
+                techPetrs={techPetrs}
+                selectedPetr={selectedPetr}
+                setSelectedPetr={setSelectedPetr}
+                currentAge={currentAge}
+              />
+            </div>
+          </div>
+        </div>
       </footer>
 
       {modalOpen && (

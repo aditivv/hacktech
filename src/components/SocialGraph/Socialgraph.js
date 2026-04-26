@@ -1,6 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import "./Socialgraph.css";
+import iPad from "../../assets/ipad_cropped.png";
+import Normal from "../../assets/normal_cropped.png";
 
 const PETRS = ["Petr 1", "Petr 2", "Petr 3", "Petr 4", "Petr 5"];
 
@@ -65,7 +67,10 @@ export default function SocialGraph({
             const a = getPosition(selectedPetr, age, true, selectedIsTech);
             const b = getPosition(petr, age, true, isTech);
             // Edge weakens for tech petrs over time
-            const strength = isTech || selectedIsTech ? Math.max(0.15, 1 - (age - 6) * 0.05) : 0.85;
+            const strength =
+              isTech || selectedIsTech
+                ? Math.max(0.15, 1 - (age - 6) * 0.05)
+                : 0.85;
             return (
               <motion.line
                 key={petr}
@@ -73,13 +78,18 @@ export default function SocialGraph({
                 y1={a.y}
                 x2={b.x}
                 y2={b.y}
-                stroke={isTech || selectedIsTech ? "var(--accent)" : "var(--ink-muted)"}
+                stroke={
+                  isTech || selectedIsTech ? "var(--accent)" : "var(--ink-muted)"
+                }
                 strokeWidth={strength * 2}
                 strokeOpacity={strength}
                 strokeDasharray={isTech || selectedIsTech ? "4 6" : "0"}
                 initial={false}
                 animate={{
-                  x1: a.x, y1: a.y, x2: b.x, y2: b.y,
+                  x1: a.x,
+                  y1: a.y,
+                  x2: b.x,
+                  y2: b.y,
                   strokeOpacity: strength,
                 }}
                 transition={{ type: "spring", stiffness: 80, damping: 20 }}
@@ -93,11 +103,14 @@ export default function SocialGraph({
           const isTech = techPetrs.has(petr);
           const isSelected = petr === selectedPetr;
           const pos = getPosition(petr, age, true, isTech);
+          const nodeImage = isTech ? iPad : Normal;
 
           return (
             <motion.button
               key={petr}
-              className={`graph-node ${isSelected ? "selected" : ""} ${isTech ? "tech" : ""}`}
+              className={`graph-node ${isSelected ? "selected" : ""} ${
+                isTech ? "tech" : ""
+              }`}
               onClick={() => setSelectedPetr(petr)}
               initial={false}
               animate={{
@@ -109,13 +122,12 @@ export default function SocialGraph({
               whileHover={{ scale: isSelected ? 1.3 : 1.15 }}
               whileTap={{ scale: 0.95 }}
             >
-              {isTech && (
-                <motion.span
-                  className="node-pulse"
-                  animate={{ scale: [1, 1.8, 1], opacity: [0.6, 0, 0.6] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                />
-              )}
+              <img
+                src={nodeImage}
+                alt={isTech ? "Tech petr" : "Petr"}
+                className="node-image"
+                draggable={false}
+              />
               <span className="node-label">{petr.replace("Petr ", "P")}</span>
             </motion.button>
           );

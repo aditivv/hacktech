@@ -112,3 +112,88 @@
   text-transform: uppercase;
   color: var(--ink-muted);
 }
+
+.node-image {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+  display: block;
+}
+
+/* Remove circle background — show only the image */
+.graph-node {
+  position: absolute;
+  background: transparent;
+  border: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transform: translate(-50%, -50%);
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.18));
+  transition: filter 0.3s ease;
+}
+
+.graph-node:hover {
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.28));
+}
+
+.graph-node.selected {
+  filter: drop-shadow(0 0 18px var(--accent, #6ee7ff))
+          drop-shadow(0 8px 16px rgba(0, 0, 0, 0.25));
+}
+
+.graph-node.tech {
+  filter: drop-shadow(0 0 14px color-mix(in oklch, var(--accent, #6ee7ff) 70%, transparent))
+          drop-shadow(0 6px 12px rgba(0, 0, 0, 0.2));
+}
+
+/* Image is the node now */
+.node-image {
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+  display: block;
+}
+
+/* Floating label below the image */
+.node-label {
+  margin-top: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--ink-muted, #9aa4b2);
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(6px);
+  padding: 2px 8px;
+  border-radius: 999px;
+  text-transform: uppercase;
+}
+
+.graph-node.selected .node-label {
+  color: var(--accent, #6ee7ff);
+  background: rgba(110, 231, 255, 0.12);
+}
+
+/* Soft pulse behind tech nodes — no hard circle */
+.node-pulse {
+  position: absolute;
+  top: 36px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    color-mix(in oklch, var(--accent, #6ee7ff) 35%, transparent) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
