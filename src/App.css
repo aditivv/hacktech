@@ -97,3 +97,14 @@ body {
   line-height: 1.55;
   color: var(--ink);
 }
+
+.data-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.data-section-divider {
+  border-top: 2px solid var(--ink);
+  margin-bottom: 4px;
+}

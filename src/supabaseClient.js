@@ -230,4 +230,32 @@ export async function getName(table, age) {
     return data[0].name // return type: string
 }
 
+export async function getAgeTechIntro(table, age) {
+    /* retrieves the age at which the specified person was introduced to technology */
+    const { data, error } = await Supabase
+        .from(table)
+        .select('age_tech_intro')
+        .eq('id', age)
+
+    if (error) {
+        console.log('Error fetching age tech intro:', error)
+        throw error
+    }
+    return data[0].age_tech_intro // return type: int
+}
+
+export async function getAgeTechRemoved(table, age) {
+    /* retrieves the age at which technology was removed from the specified person */
+    const { data, error } = await Supabase
+        .from(table)
+        .select('age_tech_removed')
+        .eq('id', age)
+
+    if (error) {
+        console.log('Error fetching age tech removed:', error)
+        throw error
+    }  
+    return data[0].age_tech_removed // return type: int
+}
+
 export default Supabase
