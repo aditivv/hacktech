@@ -1,16 +1,12 @@
 import { useState } from "react";
 import "./Agetimeline.css";
-import Supabase, {
-	addPerson,
+import {
 	updatePerson,
-	addTech,
-	removeTech,
 	getConfidence,
 	getAdaptability,
 	getAttentionSpan,
 	getImpulsivity,
 	getIrritability,
-	getName,
 	getAgeTechIntro,
 	getTechStatus,
 } from "../../supabaseClient.js";
