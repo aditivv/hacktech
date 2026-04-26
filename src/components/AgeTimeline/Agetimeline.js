@@ -46,11 +46,12 @@ export default function AgeTimeline({ ages, currentAge, onAgeDown, onAgeUp }) {
 		setProgress(0);
 
 		for (let i = 0; i < TABLES.length; i++) {
+			const age_tech_intro = await getAgeTechIntro(TABLES[i], currentAge);
 			const tech = await getTechStatus(TABLES[i], currentAge);
 			const stats = await createStats(TABLES[i], currentAge);
 			let res;
 
-			if (tech === True) {
+			if (tech === true) {
 				try {
 					const request = await fetch("http://localhost:8001/age_ipad_kid", {
 						method: "POST",
