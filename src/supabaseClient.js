@@ -258,4 +258,18 @@ export async function getAgeTechRemoved(table, age) {
     return data[0].age_tech_removed // return type: int
 }
 
+export async function getTechStatus(table, age) {
+    /* retrieves whether the specified person has technology at the specified age */
+    const { data, error } = await Supabase
+        .from(table)
+        .select('has_tech')
+        .eq('id', age)
+     
+    if (error) {
+        console.log('Error fetching tech status:', error)
+        throw error
+    }
+    return data[0].has_tech // return type: boolean
+}
+
 export default Supabase
