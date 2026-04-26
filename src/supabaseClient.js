@@ -131,7 +131,7 @@ export async function removeTech(table, age) {
     /* simulates removing  technology from a person at specified age */
     const { data, error } = await Supabase
         .from(table)
-        .update({ has_tech: false, age_tech_intro: null, age_tech_removed: age })
+        .update({ has_tech: false, age_tech_removed: age })
         .eq('id', age)
     
     if (error) {

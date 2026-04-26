@@ -1,4 +1,5 @@
 import os
+import json
 from openai import OpenAI
 from dotenv import load_dotenv
 from fastapi import FastAPI, Body
@@ -32,8 +33,8 @@ app.add_middleware(
 )
 
 client = OpenAI(
-    base_url="https://cerebras.ai",
-    api_key=os.getenv("API_KEY")
+    base_url="https://api.k2think.ai/v1",
+    api_key=os.getenv("CEREBRAS_API_KEY")
 )
     
 # ------------------------------- IPAD KID --------------------------------
@@ -41,7 +42,7 @@ client = OpenAI(
 @app.post("/age_ipad_kid")
 def simulate(req: IpadKidRequest = Body(...)): # req = a json that contains the age and the debate question
     response = client.chat.completions.create(
-			model="LLM360/K2-Think-V2",
+			model="MBZUAI-IFM/K2-Think-v2",
 			messages = [
 				{
 					"role": "system", 
@@ -59,15 +60,19 @@ def simulate(req: IpadKidRequest = Body(...)): # req = a json that contains the 
 							f"These are your old stats: {req.stats}. You are now {str(req.age)} years old. \
 							Now rank yourself in these stats from 0-100 based on how you personally feel now that you have been \
 							on social media and technology since age {str(req.age_tech_intro)}. Return it as only a json object and nothing else. \
-							Remember that your most formative years are 6, 12, 18, 24."
+							Remember that your most formative years are 6, 12, 18, 24. Do not include any additional text, only return the JSON object with the new values. \
+         			This is of utmost importance. Do NOT share your thinking, only return the FINAL ANSWER."
 				}
 			],
 			extra_body={
 				"chat_template_kwargs": {"reasoning_effort": "high"},
 			},
 		)
-    
-    return response
+    res = response.choices[0].message.content
+    think_index = res.rfind('</think>')
+    parsed = json.loads(res[think_index + 8:].strip())
+    print(parsed)
+    return parsed
 
 
 # ------------------------------- NORMAL KID --------------------------------
@@ -75,7 +80,7 @@ def simulate(req: IpadKidRequest = Body(...)): # req = a json that contains the 
 @app.post("/normal_kid_init")
 def simulate(req: NormalKidRequest = Body(...)):
 	response = client.chat.completions.create(
-		model="LLM360/K2-Think-V2",
+		model="MBZUAI-IFM/K2-Think-v2",
 		messages = [
 			{
      		"role": "system", 
@@ -97,15 +102,19 @@ def simulate(req: NormalKidRequest = Body(...)):
 			"chat_template_kwargs": {"reasoning_effort": "high"},
 		},
 	)
- 
-	return response.choices[0].message.content
+
+	res = response.choices[0].message.content
+	think_index = res.rfind('</think>')
+	parsed = json.loads(res[think_index + 8:].strip())
+	print(parsed)
+	return parsed
 
 
 #------------------COMPATABILITY-----------------------
 @app.post("/relationship")
 def simulate(req: RelationshipRequest = Body(...)): # req = a json that contains the age and the debate question
     response = client.chat.completions.create(
-			model="LLM360/K2-Think-V2",
+			model="MBZUAI-IFM/K2-Think-v2",
 			messages = [
 				{
 					"role": "system", 
@@ -125,4 +134,8 @@ def simulate(req: RelationshipRequest = Body(...)): # req = a json that contains
 			},
 		)
     
-    return response.choices[0].message.content
+    res = response.choices[0].message.content
+    think_index = res.rfind('</think>')
+    parsed = json.loads(res[think_index + 8:].strip())
+    print(parsed)
+    return parsed

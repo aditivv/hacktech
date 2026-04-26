@@ -3,8 +3,7 @@ import ProfileCard from "./components/ProfileCard/Profilecard.js";
 import SocialGraph from "./components/SocialGraph/Socialgraph.js";
 import AgeTimeline from "./components/AgeTimeline/Agetimeline.js";
 import ConfirmModal from "./components/ConfirmModal/Confirmmodal.js";
-import Supabase, { addPerson } from "./supabaseClient.js";
-//import supabase from "./supabaseClient";
+import Supabase, { addPerson, updatePerson, addTech, removeTech, getConfidence, getAdaptability, getAttentionSpan, getImpulsivity, getIrritability, getName } from "./supabaseClient.js";
 import "./App.css";
 
 const AGES = [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24];
