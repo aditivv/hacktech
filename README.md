@@ -1,70 +1,18 @@
-# Getting Started with Create React App
+# Screenbound
+By Sophie Choi and Aditi Varia
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Inspiration
+As people who were born in 2007, we were the last generation to grow up without excessive technology from birth. Now, we see that much of the new generation grew up on their devices and social media, which caused them to avoid socializing with peers and interacting with the real world. Since this phenomenon is fairly recent, it is difficult to tell how these kids will interact in the world in their teen years and early adulthood. Our project simulates what the future looks like for the generation of “iPad kids” and has an interactive experience detailing how a group of friends may deteriorate with one friend’s obsession with their new device.
 
-## Available Scripts
+## What it does
+Screenbound is a simulation that displays how relationships between people can grow and deteriorate over time based on their exposure to excessive technology and media at specific developmental stages. Specifically, our web app displays 5 individuals and follows them through the first 24 years of their simulated lifetime. The program allows users to simulate years passing in time, and gives the user the option to introduce technology into any of the individuals’ lives at any point in time. Similarly, the user has the option to remove the excessive exposure to technology at any point in time as well, while still accounting for the fact that the individual was exposed to technology for a certain period of time. 
 
-In the project directory, you can run:
+During each year, the user can view each individual person and some of their key traits, including confidence, attention span, irritability, impulsivity, and adaptability, as well as their relationship/closeness with the other individuals in the simulation. These values will change over time depending on their exposure to technology, simulating the impact of technology on human interactions and relationships. The user additionally has the ability to go back in time and make changes, allowing them to simulate how different events could change the trajectory of these relationships.
 
-### `npm start`
+Finally, the user can scroll down in the web app to view information about the growing influence of technology on today’s youth, and can learn more about the negative effects of excessive exposure to technology impacts children in the long run. As a whole, our project is intended to simulate what seems to be the inevitable future of the “iPad kids” of today, and serves as a warning for upcoming generations.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## How we built it
+We built it using React in the frontend and Python’s FastAPI for the backend. Within the frontend, we used Loveable to create an intuitive frontend that will perfectly display our simulation with a dynamic interface. Within the backend, we used K2 Think V2 to simulate the interactions between the group of friends and have the friend group adapt to a friend’s obsession with a device. We also used a DBMS called Supabase for our database, which stores information about each person in our simulation. 
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## What's next for Screenbound
+In the future, it would be nice to incorporate dialogue between the friends, so that it is obvious why certain changes in their friendship occurred. It would also be better if the amount of people in the friend group could be dynamically changed in the beginning, so that the simulation can become more complex.
