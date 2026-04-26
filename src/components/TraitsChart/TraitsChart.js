@@ -1,6 +1,14 @@
 // TraitsChart.jsx
 import "./TraitsChart.css";
 
+const DISPLAY_NAMES = {
+  confidence: "Confidence",
+  attention_span: "Attention Span",
+  irritability: "Irritability",
+  impulsivity: "Impulsivity",
+  adaptability: "Adaptability",
+};
+
 const getStatus = (value) => {
   if (value >= 80) return "Very High";
   if (value >= 60) return "High";
@@ -17,23 +25,44 @@ const getStatusClass = (value) => {
   return "trait-bar--verylow";
 };
 
-export default function TraitsChart({ traits }) {
+export default function TraitsChart({ stats, loading }) {
+  if (loading || !stats || Object.keys(stats).length === 0) {
+    return (
+      <div className="traits-chart">
+        {[1,2,3,4,5].map(i => (
+          <div className="traits-row" key={i}>
+            <div className="traits-header">
+              <span className="traits-name-skeleton" />
+              <span className="traits-status-skeleton" />
+            </div>
+            <div className="traits-track">
+              <div className="trait-bar-skeleton" />
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  }
+
   return (
     <div className="traits-chart">
-      {Object.entries(traits).map(([name, value]) => (
-        <div className="traits-row" key={name}>
-          <div className="traits-header">
-            <span className="traits-name">{name}</span>
-            <span className="traits-status">{getStatus(value)}</span>
+      {Object.entries(stats).map(([key, value]) => {
+        const safeValue = value ?? 100;  // ← fallback to 100 if null
+        return (
+          <div className="traits-row" key={key}>
+            <div className="traits-header">
+              <span className="traits-name">{DISPLAY_NAMES[key] ?? key}</span>
+              <span className="traits-status">{getStatus(safeValue)}</span>
+            </div>
+            <div className="traits-track">
+              <div
+                className={`traits-bar ${getStatusClass(safeValue)}`}
+                style={{ width: `${safeValue}%` }}
+              />
+            </div>
           </div>
-          <div className="traits-track">
-            <div
-              className={`traits-bar ${getStatusClass(value)}`}
-              style={{ width: `${value}%` }}
-            />
-          </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 }

@@ -50,3 +50,37 @@
 .trait-bar--moderate  { background: #e9c46a; }
 .trait-bar--low       { background: #f4a261; }
 .trait-bar--verylow   { background: #c0392b; }
+
+.trait-bar-skeleton {
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(90deg, var(--border) 25%, var(--bg) 50%, var(--border) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.2s infinite;
+  border-radius: 3px;
+}
+
+.traits-name-skeleton {
+  display: inline-block;
+  width: 80px;
+  height: 10px;
+  background: linear-gradient(90deg, var(--border) 25%, var(--bg) 50%, var(--border) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.2s infinite;
+  border-radius: 3px;
+}
+
+.traits-status-skeleton {
+  display: inline-block;
+  width: 50px;
+  height: 10px;
+  background: linear-gradient(90deg, var(--border) 25%, var(--bg) 50%, var(--border) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.2s infinite;
+  border-radius: 3px;
+}
+
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}

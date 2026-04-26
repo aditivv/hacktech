@@ -1,14 +1,20 @@
 import "./Profilecard.css";
+import { useState, useEffect, useRef } from "react";
 import RelationshipChart from "../RelationshipChart/RelationshipChart";
 import TraitsChart from "../TraitsChart/TraitsChart";
+import Supabase, { addPerson, updatePerson, addTech, removeTech, getConfidence, getAdaptability, getAttentionSpan, getImpulsivity, getIrritability, getName, getAge, getAgeTechIntro, getAgeTechRemoved } from "../../supabaseClient.js";
 
-export default function ProfileCard({ age, techIntroduced, onIntroduce, onRemove, selectedPetr }) {
-  const FRIENDS = [{ name: "Petr 1", relationship: 100 },
-                  { name: "Petr 2", relationship: 100 },
-                  { name: "Petr 3", relationship: 100 },
-                  { name: "Petr 4", relationship: 100 },
-                  { name: "Petr 5", relationship: 100 }];
+export default function ProfileCard({ age, techIntroduced, onIntroduce, onRemove, selectedPetr, relationships, stats, relationshipsLoading, statsLoading }) {
+  const NAMES = ["Petr 1", "Petr 2", "Petr 3", "Petr 4", "Petr 5"]
+  const TABLES = ["person_A", "person_B", "person_C", "person_D", "person_E"]
+  const NAME_TO_TABLE = Object.fromEntries(NAMES.map((name, i) => [name, TABLES[i]]));
+
   const TRAITS = { "Confidence": 100, "Attention Span": 100, "Irritability": 100, "Impulsivity": 100, "Adaptability": 100}
+
+  const filtered = Object.fromEntries(
+    Object.entries(NAME_TO_TABLE).filter(([key]) => key !== selectedPetr)
+  );
+  const values = Object.values(filtered);
 
   return (
     <div className="profile-card">
@@ -28,27 +34,34 @@ export default function ProfileCard({ age, techIntroduced, onIntroduce, onRemove
       {/* Row 2 — Relationship Chart */}
       <div className="profile-section">
         <p className="profile-section-label">Relationships</p>
-        <RelationshipChart selectedPetr={selectedPetr} friends={FRIENDS} />
+        <RelationshipChart selectedPetr={selectedPetr} relationships={relationships} loading={relationshipsLoading}/>
       </div>
 
       {/* Row 3 — Traits Chart */}
       <div className="profile-section">
         <p className="profile-section-label">Traits</p>
-        <TraitsChart traits={TRAITS} />
+        <TraitsChart stats={stats} loading={statsLoading} />
       </div>
+
 
       {/* Action buttons */}
       <div className="profile-actions">
         <button
           className="profile-btn profile-btn--introduce"
-          onClick={onIntroduce}
+          onClick={() => {
+            onIntroduce()
+            addTech(NAME_TO_TABLE[selectedPetr], age)
+          }}
           disabled={techIntroduced}
         >
           Introduce Tech
         </button>
         <button
           className="profile-btn profile-btn--remove"
-          onClick={onRemove}
+          onClick={() => {
+            onRemove()
+            removeTech(NAME_TO_TABLE[selectedPetr], age)
+          }}
           disabled={!techIntroduced}
         >
           Remove Tech

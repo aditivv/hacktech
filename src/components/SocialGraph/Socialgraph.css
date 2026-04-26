@@ -1,69 +1,114 @@
-.graph-wrapper {
-  background: var(--paper);
-  border: 1.5px solid var(--border);
-  border-radius: var(--radius);
-  padding: 16px 20px 14px;
-  box-shadow: 3px 3px 0 var(--shadow);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-}
-
-.graph-label {
-  font-size: 0.65rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--ink-muted);
-  align-self: flex-start;
-}
-
-.graph-svg {
+.social-graph-stage {
   width: 100%;
-  max-width: 420px;
+  height: 480px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1200px;
+  perspective-origin: center;
+  position: relative;
 }
 
-/* ── Edges ── */
-.graph-edge {
-  stroke: var(--border);
-  stroke-width: 1.5;
-  stroke-dasharray: 4 3;
-  transition: stroke 0.4s, stroke-dasharray 0.4s;
+.social-graph-scene {
+  position: relative;
+  width: 400px;
+  height: 400px;
+  transform-style: preserve-3d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.graph-edge--tech {
-  stroke: var(--accent);
-  stroke-dasharray: none;
-  stroke-width: 2;
+.social-graph-edges {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  transform: translateZ(-20px);
 }
 
-/* ── Node labels ── */
-.graph-node-label {
+.graph-node {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 56px;
+  height: 56px;
+  margin-left: -28px;
+  margin-top: -28px;
+  border-radius: 50%;
+  background: var(--node);
+  color: var(--paper);
+  border: 2px solid var(--ink);
   font-family: var(--font-mono);
-  font-size: 10px;
-  fill: var(--ink-muted);
+  font-size: 0.7rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 20px rgba(26, 22, 16, 0.25),
+              0 2px 6px rgba(26, 22, 16, 0.15);
+  transform-style: preserve-3d;
+  transition: background 0.4s ease, border-color 0.4s ease;
+}
+
+.graph-node.selected {
+  background: var(--paper);
+  color: var(--ink);
+  border-color: var(--accent);
+  box-shadow: 0 8px 28px rgba(192, 57, 43, 0.4),
+              0 0 0 4px var(--accent-soft);
+  z-index: 10;
+}
+
+.graph-node.tech {
+  background: var(--node-glow);
+  border-color: var(--accent);
+  box-shadow: 0 6px 24px rgba(192, 57, 43, 0.55),
+              0 0 0 2px var(--accent-soft);
+}
+
+.graph-node.tech.selected {
+  background: var(--node-glow);
+  color: var(--paper);
+}
+
+.node-pulse {
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 2px solid var(--accent);
   pointer-events: none;
 }
 
-/* ── Node group — hover & selected ── */
-.graph-node-group {
-  cursor: pointer;
+.node-label {
+  position: relative;
+  z-index: 1;
 }
 
-.graph-node-img {
-  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-  transform-origin: center;
-  transform-box: fill-box;
+.graph-center-label {
+  position: absolute;
+  bottom: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  pointer-events: none;
 }
 
-.graph-node-group:hover .graph-node-img {
-  transform: scale(1.5);
+.center-petr {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--ink);
 }
 
-.graph-node-group:active .graph-node-img {
-  transform: scale(1.5);
-}
-
-.graph-node-group--selected .graph-node-img {
-  transform: scale(1.5);
+.center-age {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
 }

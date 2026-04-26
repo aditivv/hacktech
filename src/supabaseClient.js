@@ -32,7 +32,7 @@ export async function addPerson(name, table) {
     const { data, error } = await Supabase
         .from(table)
         .update(formatted)
-        .eq('id', 1)
+        .eq('id', 6)
 
     if (error) {
         console.log('Error creating person:', error)

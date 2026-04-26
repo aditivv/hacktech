@@ -4,6 +4,7 @@ from openai import OpenAI
 from dotenv import load_dotenv
 from fastapi import FastAPI, Body
 from pydantic import BaseModel
+from typing import Dict, Optional
 from fastapi.middleware.cors import CORSMiddleware
 
 load_dotenv()
@@ -19,7 +20,7 @@ class NormalKidRequest(BaseModel):
     stats: dict
 
 class RelationshipRequest(BaseModel):
-    petr1: str
+    petr1: dict
     petr2: dict
     petr3: dict
     petr4: dict
@@ -156,3 +157,58 @@ def simulate(req: RelationshipRequest = Body(...)): # req = a json that contains
     parsed = json.loads(res[think_index + 8:].strip())
     print(parsed)
     return parsed
+
+# ------- DIARY ENTRY -------------
+class DiaryRequest(BaseModel):
+    petr: str
+    age: int
+    is_tech: bool
+    stats: Dict[str, float]
+    age_tech_intro: Optional[int] = 6  # default if not provided
+
+@app.post("/petr_diary")
+def petr_diary(req: DiaryRequest = Body(...)):
+    stat_lines = "\n".join(
+        f"- {k}: {round(float(v))}/100" for k, v in req.stats.items()
+    )
+
+    system_prompt = (
+    (
+        f"Since age {req.age_tech_intro}, you have grown up surrounded by screens, "
+        f"smartphones, and constant connectivity, consuming many hours of recreational "
+        f"media daily. "
+        if req.is_tech
+        else
+        "You have grown up without modern technology — no smartphones, minimal screens, "
+        "and most of your time spent in the physical world with people around you. "
+    )
+    + f"You are {req.petr}, a {req.age}-year-old human in a humanity simulation. "
+    + f"You are writing a short, personal diary entry in the first person. "
+    + f"Tone: introspective, age-appropriate, sensory. "
+    + f"Never mention numbers, statistics, or that you are simulated. "
+    + f"Write 3-5 sentences. No greeting, no sign-off. "
+    + f"Return ONLY the diary entry text — no JSON, no markdown, no preamble."
+)
+
+    user_prompt = (
+        f"My inner state right now (scale 1-100):\n{stat_lines}\n\n"
+        f"Write today's diary entry reflecting how I actually feel at this moment in my life."
+    )
+
+    response = client.chat.completions.create(
+        model="MBZUAI-IFM/K2-Think-v2",
+        messages=[
+            {"role": "system", "content": system_prompt},
+            {"role": "user",   "content": user_prompt},
+        ],
+        extra_body={
+            "chat_template_kwargs": {"reasoning_effort": "high"},  # diary doesn't need deep reasoning
+        },
+    )
+
+    res = response.choices[0].message.content
+    # Strip K2's <think> block if present (same pattern as /age_ipad_kid)
+    think_index = res.rfind("</think>")
+    entry = res[think_index + 8:].strip() if think_index != -1 else res.strip()
+
+    return {"entry": entry}
