@@ -6,7 +6,6 @@ const supabaseKey = process.env.REACT_APP_SUPABASE_API_KEY
 const Supabase = createClient(supabaseUrl, supabaseKey)
 
 // initialize a person at age 6 with random traits and no tech; can enter which person through the table parameter
-
 /* age 6 traits range:
 - confidence: 55-80
 - attention span: 20-45
@@ -14,12 +13,13 @@ const Supabase = createClient(supabaseUrl, supabaseKey)
 - impulsivity: 60-85
 - adaptability: 30-55
 */
-
 function randInt(min, max) {
+    /* returns random integer between min and max (inclusive) */
     return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
 export async function addPerson(name, table) {
+    /* updates the first row of specified table with initial values + name to "initialize" a person */
     const formatted = {
         name: name,
         confidence: randInt(55, 80),
@@ -43,6 +43,7 @@ export async function addPerson(name, table) {
 }
 
 export async function updatePerson(table, age, confidence, attention_span, irritability, impulsivity, adaptability) {
+    /* updates the row with the specified age in the given table with the provided values */
     // retrieves the value of name from the previous year so that it can be preserved in the update
     const { data: data_name, error: fetchError_name } = await Supabase
         .from(table)
@@ -112,6 +113,7 @@ export async function updatePerson(table, age, confidence, attention_span, irrit
 }
 
 export async function addTech(table, age) {
+    /* simulates introducing technology to a person at specified age */
     const { data, error } = await Supabase
         .from(table)
         .update({ has_tech: true, age_tech_intro: age, age_tech_removed: null })
@@ -126,6 +128,7 @@ export async function addTech(table, age) {
 }
 
 export async function removeTech(table, age) {
+    /* simulates removing  technology from a person at specified age */
     const { data, error } = await Supabase
         .from(table)
         .update({ has_tech: false, age_tech_intro: null, age_tech_removed: age })
@@ -137,6 +140,94 @@ export async function removeTech(table, age) {
     }
     
     return data
+}
+
+export async function getConfidence(table, age) {
+    /* retrieves the confidence value of the specified person at the specified age */
+    const { data, error } = await Supabase
+        .from(table)
+        .select('confidence')
+        .eq('id', age)
+
+    if (error) {
+        console.log('Error fetching confidence:', error)
+        throw error
+    }
+
+    return data[0].confidence // return type: int
+}
+
+export async function getAttentionSpan(table, age) {
+    /* retrieves the attention span value of the specified person at the specified age */
+    const { data, error } = await Supabase
+        .from(table)
+        .select('attention_span')
+        .eq('id', age)
+    
+    if (error) {
+        console.log('Error fetching attention span:', error)
+        throw error
+    }
+    
+    return data[0].attention_span // return type: int
+}
+
+export async function getIrritability(table, age) {
+    /* retrieves the irritability value of the specified person at the specified age */
+    const { data, error } = await Supabase 
+        .from(table)
+        .select('irritability')
+        .eq('id', age)
+
+    if (error) {
+        console.log('Error fetching irritability:', error)
+        throw error
+    }
+
+    return data[0].irritability // return type: int
+}
+
+export async function getImpulsivity(table, age) {
+    /* retrieves the impulsivity value of the specified person at the specified age */
+    const { data, error } = await Supabase
+        .from(table)
+        .select('impulsivity')
+        .eq('id', age)
+
+    if (error) {
+        console.log('Error fetching impulsivity:', error)
+        throw error
+    }
+
+    return data[0].impulsivity // return type: int
+}
+
+export async function getAdaptability(table, age) {
+    /* retrieves the adaptability value of the specified person at the specified age */
+    const { data, error } = await Supabase
+        .from(table)
+        .select('adaptability')
+        .eq('id', age)
+
+    if (error) {
+        console.log('Error fetching adaptability:', error)
+        throw error
+    }
+    return data[0].adaptability // return type: int
+}
+
+export async function getName(table, age) {
+    /* retrieves the name of the specified person at the specified age */
+    const { data, error } = await Supabase
+        .from(table)
+        .select('name')
+        .eq('id', age)
+
+    if (error) {
+        console.log('Error fetching name:', error)
+        throw error
+    }
+    return data[0].name // return type: string
 }
 
 export default Supabase

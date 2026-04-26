@@ -1,11 +1,14 @@
 // test.js
 import 'dotenv/config'
-import Supabase, { addPerson, addTech, removeTech, updatePerson } from './supabaseClient.js'
+import Supabase, { addPerson, addTech, removeTech, updatePerson, getName } from './supabaseClient.js'
 
 // addPerson('Sophie', 'person_A')
 //     .then(data => console.log('Added person:', data))
 //     .catch(err => console.error('Error adding person:', err))
 
+getName('person_A', 1)
+    .then(data => console.log('Name at age 1:', data))
+    .catch(err => console.error('Error fetching name:', err))
 
 // updatePerson('person_A', 2, 85, 75, 65, 55, 35)
 //     .then(data => console.log('Updated person:', data))
